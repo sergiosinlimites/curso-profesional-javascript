@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a href="/ejercicios">Go back</a>
+    <p><em>Abre la consola</em></p>
+    <script>
+        // Global scope
+        var message = "Hello, global";
+
+        // Function scope
+        // esto imprime diez veces 10
+        function printNumbers(){
+            for(var i = 0; i < 10; i++){
+                setTimeout(() => {
+                    console.log(i);
+                }, 100)
+            }
+        }
+        // esto imprime los numeros del 1 al 10
+        function printNumbersFunc(){
+            for(var i = 0; i < 10; i++){
+                function eventuallyHappen(n){
+                    setTimeout(() => {
+                        console.log(n);
+                    }, 100)
+                }
+                eventuallyHappen(i);
+            }
+        }
+
+        //printNumbers();
+        //printNumbersFunc();
+
+        // block scope
+        function printNumbersLet(){
+            for(let i = 0; i < 10; i++){
+                setTimeout(() => {
+                    console.log(i);
+                }, 100)
+            }
+        }
+        printNumbersLet();
+
+        // module scope
+
+        // tenemos un archivo <script src="archivo.js" type="module"></scrip> que tiene que decirse que es de tipo modulo
+        // y luego dentro de este archivo podemos usar import para importar cosas que no deberían ir ahí y export en el otro archivo.
+
+    </script>
+</body>
+</html>

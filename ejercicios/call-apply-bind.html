@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a href="/ejercicios">Go back</a>
+    <p><em>Abre la consola</em></p>
+    <ul>
+        <button class="call-to-action">Aprende</button>
+        <button class="call-to-action">Aprende</button>
+        <button class="call-to-action">Y aprende más</button>
+    </ul>
+    <script>
+        function saludar(){
+            console.log(`Hola. Soy ${this.name} ${this.apellido}`);
+        }
+
+        const sergio = {
+            name: "Sergio",
+            apellido: "Bolaños"
+        }
+
+        // todas las funciones tienen call, apply, bind
+        // CALL
+        saludar.call(sergio);
+
+        function caminar(metros, direccion){
+            console.log(`${this.name} camina ${metros} metros hacia el ${direccion}.`);
+        }
+        // en call cuando hay argumentos hay que pasarlos ahí
+        caminar.call(sergio, 235, "norte");
+
+        // APPLY
+        // en apply toca poner los argumentos en un array, que puede ser más sencillo en ciertas ocasiones.
+        caminar.apply(sergio, [100, "sur"]);
+
+        // recomendacion: Call -> Comas, Apply -> Array
+
+        // BIND
+        // no llama la función sino que la guarda en un nuevo valor
+        const persona2 = {
+            name: "Daniel",
+            apellido: "Penagos"
+        }
+        // en caso de NO necesitar argumentos:
+        const danielSaluda = saludar.bind(persona2);
+        danielSaluda();
+
+        // en caso de SÍ necesitar argumentos:
+        const danielCamina = caminar.bind(persona2, 1000); // si pones argumentos aquí iran hardcodeados
+        danielCamina("este"); // si los escribes aquí serán más dinámicos
+        // esto se llama CUTTING, donde se guardan parcialmente algunos argumentos y luego se llenan los demás.
+
+        // utilizandolo con botones
+
+        const botones = document.getElementsByClassName("call-to-action");
+
+        // esto no va a funcionar porque forEach solo funciona con arrays y lo que estamos trayendo es un NodeList
+        /* botones.forEach(boton => {
+            boton.onclick = () => {
+                alert("Me oprimiste");
+            }
+        }); */
+
+        Array.prototype.forEach.call(botones, (boton) => {
+            boton.onclick = () => {
+                alert('Me oprimiste');
+            }
+        })
+
+        // este también servirá pero no para getElementsByClassName, ya que este nos regresa un HtmlCollection
+        /*botones.forEach(boton => {
+            boton.onclick = () => {
+                alert("Me oprimiste");
+            }
+        });*/
+
+        
+    </script>
+</body>
+</html>
