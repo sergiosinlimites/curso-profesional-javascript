@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a href="/ejercicios">Go back</a>
+    <script src="https://unpkg.com/fast-levenshtein@2.0.6/levenshtein.js"></script>
+    <script>
+        // Proxy es parecido a getters y setters
+        // Usa un concepto que se llama traps: son interceptores de llamadas. A diferencia de getters, no opera sobre una propieda, si no sobre un objeto.
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy#Methods_of_the_handler_object
+
+        // Creemos un ejemplo donde interceptamos llamadas para leer una propiedad
+        // Si la propiedad existe, la regresamos
+        // Si no existe, entonces sugerimos una que pueda funcionar
+
+        // Para eso eso vamos a usar un algoritmo que se llama Levenshtein. (window.Levenshtein.get)
+        // Ejemplos de levenshtein distance (usa window.Levenshtein)
+
+        const target = {
+            red: 'Rojo',
+            green: 'Verde',
+            blue: 'Azúl'
+        }
+
+        function validador(prop, value){
+            const keys = Object.keys(target);
+            const invalidProp = keys.indexOf(prop) === -1;
+
+            if(invalidProp){
+                console.error('Propiedad invalida');
+                return false;
+            }
+
+            return true;
+        }
+
+        const handler = {
+            get(obj, prop) {
+                if(prop in obj){
+                    return obj[prop];
+                }
+
+                const suggestion = Object.keys(obj).find(key => {
+                    return Levenshtein.get(key, prop) <= 3;
+                })
+
+                if(suggestion){
+                    console.log(`${prop} no se encontró. ¿Quisiste decir ${suggestion}?`)
+                }
+
+                return obj[prop]
+            },
+            set(obj, prop, value) {
+                if(validador(prop, value)){
+                    obj[prop] = value;
+                }
+            }
+        }
+
+        const p = new Proxy(target, handler);
+
+/////////////////////// another example
+
+        function validatorMan(prop, value){
+            if((prop === 'name' || prop === 'lastName') && /\d/.test(value)){
+                console.error(`The property ${prop} can not contain numbers`);
+                return false;
+            }
+            if((prop === 'bienes[0].valor' || prop === 'bienes[1].valor' || prop === 'age') && typeof value !== 'number'){
+                console.error(`The property ${prop} must be a number`);
+                return false
+            }
+            return true;
+        }
+
+        const targetMan = {
+            name: '',
+            lastName: '',
+            age: 18,
+            password: '2938jdsnkwq2pop3ncmaslxm387',
+            bienes: [
+                {
+                    tipo: 'carro',
+                    color: '',
+                    marca: '',
+                    valor: 0,
+                },
+                {
+                    tipo: 'casa',
+                    lugar: '',
+                    valor: 0
+                }
+            ],
+            get nombreCompleto(){
+                return `${this.name} ${this.lastName}`;
+            },
+            get patrimonio(){
+                let dineroPatrimonio = 0
+                this.bienes.forEach(bien => {
+                    dineroPatrimonio = dineroPatrimonio + bien.valor;
+                });
+                return dineroPatrimonio;
+            }
+        }
+
+        const handlerMan = {
+            get(obj, prop){
+                if(prop in obj){
+                    if(prop === 'password'){
+                        return '*'.repeat(obj[prop].length);
+                    }
+                    return obj[prop];
+                }
+
+                const suggestionMan = Object.keys(obj).find(key => {
+                    return Levenshtein.get(key, prop) <= 3;
+                })
+
+                if(suggestionMan){
+                    console.error(`The property ${prop} doesn't exist. Did you mean ${suggestionMan}?`);
+                }
+
+                
+            },
+            set(obj, prop, value){
+                if(validatorMan(prop, value)){
+                    obj[prop] = value
+                }
+            }
+        }
+
+        const proxyMan = new Proxy(targetMan, handlerMan);
+
+    </script>
+</body>
+</html>

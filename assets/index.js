@@ -3,7 +3,7 @@ import Autoplay from './plugins/Autoplay/autoplay.js';
 
 const video = document.querySelector('video');
 const player = new MediaPlayer({ el: video, plugins: [
-    //new Autoplay()
+    new Autoplay()
 ]});
 
 const buttonPlay = document.querySelector('.play-button');
