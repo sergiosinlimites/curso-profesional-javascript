@@ -1,10 +1,10 @@
-function Autoplay(){}
+function AutoPlay(){}
 
-Autoplay.prototype.run = function(player){
+AutoPlay.prototype.run = function(player){
     if(!player.muted){
         player.muted = true;
     }
     player.play();
 }
 
-export default Autoplay;
+export default AutoPlay;

@@ -7,16 +7,16 @@ function MediaPlayer(config) {
 
 MediaPlayer.prototype._initPlugins = function(){
     // para que no tenga acceso a todas las funciones del player le decimos cuáles sí:
-    const media = this.media // aqui media queda como privado
     const player = {
-        play: () => media.play(), // podría ponerle this.media.play() o this.darPlay y sirve igual
-        pause: () => media.pause(),
+        play: () => this.darPlay(), // podría ponerle this.media.play() o this.darPlay y sirve igual
+        pause: () => this.darPause(),
+        media: this.media,
         get muted(){ // get + nombrePropiedadVirtual()
-            return media.muted;
+            return this.media.muted;
         },
         set muted(value){
-            media.muted = value
-        }
+            this.media.muted = value
+        },
     }
     this.plugins.forEach(plugin => {
         plugin.run(player)
