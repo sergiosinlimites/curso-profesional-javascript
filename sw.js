@@ -26,14 +26,14 @@ async function precache(){
     try {
         const cache = await caches.open(VERSION); // abrimos una instancia de cache
         return cache.addAll([
-            '/', // super importante este
-            '/index.html',
-            '/assets/index.js',
-            '/assets/MediaPlayer/mediaplayer.js',
-            '/assets/plugins/Autoplay/autoplay.js',
-            '/assets/plugins/Autopause/autopause.js',
-            '/assets/index.css',
-            '/assets/BigBuckBunny.mp4'
+            // '/',
+            // '/index.html',
+            // '/assets/index.js',
+            // '/assets/MediaPlayer/mediaplayer.js',
+            // '/assets/plugins/Autoplay/autoplay.js',
+            // '/assets/plugins/Autopause/autopause.js',
+            // '/assets/index.css',
+            // '/assets/BigBuckBunny.mp4' se quitan ya que igual se hace un fetch y parcel le pone un hash a todos los archivos
     ])
     } catch (err) {
         console.error(err);
