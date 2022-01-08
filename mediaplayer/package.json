@@ -1,0 +1,22 @@
+{
+  "name": "sergiosinlimites-mediaplayer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/MediaPlayer/mediaplayer.js",
+  "scripts": {
+    "build": "tsc src/**/*.ts src/MediaPlayer/*.ts src/plugins/**/*.ts --resolveJsonModule --esModuleInterop --outDir lib",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "MediaPlayer",
+    "Design Patterns",
+    "TypeScript",
+    "Proxies",
+    "Service Workers"
+  ],
+  "author": "Sergio Andrés Bolaños Penagos",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^4.5.4"
+  }
+}

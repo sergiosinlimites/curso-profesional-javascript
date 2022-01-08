@@ -1,10 +1,11 @@
-import MediaPlayer from './MediaPlayer/mediaplayer';
-import AutoPlay from './plugins/Autoplay/autoplay';
-import AutoPause from './plugins/Autopause/autopause';
+import MediaPlayer from 'sergiosinlimites-mediaplayer';
+import AutoPlay from 'sergiosinlimites-mediaplayer/lib/plugins/Autoplay/autoplay';
+import AutoPause from 'sergiosinlimites-mediaplayer/lib//plugins/Autopause/autopause';
+import AdsPlugin from 'sergiosinlimites-mediaplayer/lib//plugins/Ads';
 
 const video = document.querySelector('video');
 const player = new MediaPlayer({ el: video, plugins: 
-    [new AutoPlay(), new AutoPause()]
+    [new AutoPlay(), new AutoPause(), new AdsPlugin()]
 });
 
 const buttonPlay: HTMLElement = document.querySelector('.play-button');

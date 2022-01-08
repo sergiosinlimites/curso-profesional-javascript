@@ -6,12 +6,22 @@ interface ConfigParam {
 class MediaPlayer {
     media: HTMLMediaElement // videoelement y audioelement son hijos de mediaelement
     plugins: Array<any>
+    container: HTMLElement;
 
     constructor(config: ConfigParam) {
         this.media = config.el;
         this.plugins = config.plugins || [];
+        this.initPlayer();
         this.initPlugins();
     }
+
+    initPlayer(){
+        this.container = document.createElement('div');
+        this.container.style.position = 'relative';
+        this.media.parentNode.insertBefore(this.container, this.media);
+        this.container.appendChild(this.media);
+    }
+
     private initPlugins() { // en lugar del _ se usa private
         // para que no tenga acceso a todas las funciones del player le decimos cuáles sí:
         /*  const player = {
